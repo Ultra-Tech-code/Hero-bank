@@ -15,7 +15,7 @@
         console.log(userDetails, userDetails);
 
          if(userDetails !== null && accountnumber == userDetails["accountNumber"] && password == userDetails["password"]){
-              alert("login successful");
+              alert("Login successful");
               localStorage.setItem("accountNumber", accountnumber);
               window.location.href = "account.html";
             }else if(userDetails == null){
@@ -48,7 +48,7 @@
         }
 
         //check for password match and account type
-        if(password == confirmPassword && accountType == 1 || accountType == 2 ){
+        if(password == confirmPassword && (accountType == 1 || accountType == 2)){
             alert("registration successful \n your Account Number is " + accountNumber + "\n please keep it safe");  
             alert("please login to continue");
 
@@ -59,14 +59,13 @@
                 accountNumber: accountNumber,
                 accountType: accountType
             }
-
-            localStorage.setItem(accountNumber,  JSON.stringify(customerData[accountNumber]));
+              localStorage.setItem(accountNumber,  JSON.stringify(customerData[accountNumber]));
 
         }else if(accountType == 3){
             alert("Thank you for banking with us");
             window.location.href = "index.html";
         }else{  
-            alert("password does not match or Invalid account type. \nplease try again");
+            alert("Password does not match or Invalid account type. \nplease try again");
         }
         window.location.href = "index.html";
     
