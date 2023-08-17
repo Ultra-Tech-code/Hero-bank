@@ -1,6 +1,6 @@
 <script>
    alert("Hello! Welcome to Hero's Bank!");
-   let input = prompt("press 1 to login \npress 2 to register \npress 3 to recover PIN \npress 4 to exit");
+   let input = prompt("press 1 to login \npress 2 to register \npress 3 to recover PIN  \npress 4 to Delete Account \npress 5 to exit");
 
    const customerData = {};
    let accountNumber;
@@ -12,13 +12,18 @@
 
         //fetch userDetails from local storage
         let userDetails = JSON.parse(localStorage.getItem(accountnumber));
+        console.log(userDetails, userDetails);
 
          if(userDetails !== null && accountnumber == userDetails["accountNumber"] && password == userDetails["password"]){
               alert("login successful");
               localStorage.setItem("accountNumber", accountnumber);
               window.location.href = "account.html";
+            }else if(userDetails == null){
+                alert("Invalid Login Details. please register");
+                window.location.href = "index.html";
             }else{
-                alert("invalid Acccount Number or PIN. \nplease try again");
+                alert("Invalid Acccount Number or PIN. \nplease try again");
+                window.location.href = "index.html";
             }
 
     //register block
@@ -81,8 +86,32 @@
             window.location.href = "index.html";
         }
     
-    //exit block
+    //delete block
     }else if(input == 4){
+        alert("You are about to delete your account. press Ok to proceed");
+
+       let accountnumber =  prompt("Enter your Acccount Number \n Acccount Number:");
+       let password = prompt("Enter your pin \n PIN:");
+
+        //fetch userDetails from local storage
+        let userDetails = JSON.parse(localStorage.getItem(accountnumber));
+        console.log(userDetails, userDetails);
+
+         if(userDetails !== null && accountnumber == userDetails["accountNumber"] && password == userDetails["password"]){
+              localStorage.removeItem(accountnumber);
+              alert("Account deleted succeffully");
+              window.location.href = "index.html";
+            }else if(userDetails == null){
+                alert("Account does not exist. please register");
+                window.location.href = "index.html";
+            }else{
+                alert("Invalid Acccount Number or PIN. \nplease try again");
+                window.location.href = "index.html";
+            }
+    
+
+     //exit block
+    } else if(input == 5){
         alert("Thank you for banking with us");
 
     //invalid input block
