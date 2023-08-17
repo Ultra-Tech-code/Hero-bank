@@ -12,7 +12,6 @@
 
         //fetch userDetails from local storage
         let userDetails = JSON.parse(localStorage.getItem(accountnumber));
-        console.log(userDetails, "userDetails[accountnumber]");
 
          if(userDetails !== null && accountnumber == userDetails["accountNumber"] && password == userDetails["password"]){
               alert("login successful");
