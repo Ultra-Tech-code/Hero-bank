@@ -12,8 +12,9 @@
 
         //fetch userDetails from local storage
         let userDetails = JSON.parse(localStorage.getItem(accountnumber));
+        console.log(userDetails, "userDetails[accountnumber]");
 
-         if(accountnumber == userDetails["accountNumber"] && password == userDetails["password"] &&  userDetails["accountNumber"] !== null){
+         if(userDetails !== null && accountnumber == userDetails["accountNumber"] && password == userDetails["password"]){
               alert("login successful");
               localStorage.setItem("accountNumber", accountnumber);
               window.location.href = "account.html";
