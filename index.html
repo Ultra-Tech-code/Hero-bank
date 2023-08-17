@@ -78,12 +78,15 @@
         //fetch userDetails from local storage
         let userDetails = JSON.parse(localStorage.getItem(accountNumber));
 
-        if(name == userDetails["name"] && accountNumber == userDetails["accountNumber"]){
+        if(userDetails !== null && name == userDetails["name"] && accountNumber == userDetails["accountNumber"]){
             alert("your PIN is " + userDetails["password"]); 
             window.location.href = "index.html"; 
+        }else if(userDetails == null){
+                alert("Invalid Login Details. please register");
+                window.location.href = "index.html";
         }else{
-            alert("invalid Acccount Number or Name. \nplease try again");
-            window.location.href = "index.html";
+        alert("invalid Acccount Number or Name. \nplease try again");
+        window.location.href = "index.html";
         }
     
     //delete block
@@ -107,8 +110,7 @@
             }else{
                 alert("Invalid Acccount Number or PIN. \nplease try again");
                 window.location.href = "index.html";
-            }
-    
+            }    
 
      //exit block
     } else if(input == 5){
