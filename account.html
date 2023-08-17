@@ -1,0 +1,85 @@
+<script>
+
+//fetch userDetails from local storage
+let accountnumber = localStorage.getItem("accountNumber");
+let userDetails = JSON.parse(localStorage.getItem(accountnumber));
+
+let username = userDetails["name"];
+let acccountNumber = userDetails["accountNumber"];
+
+
+
+    alert(`Hello! Welcome ${username}, ${acccountNumber}!`);
+    let input = prompt("press 1 to deposit \npress 2 to withdraw \npress 3 to check balance \npress 4 to transfer \npress 5 to exit");
+
+    //deposit block
+    if(input == 1){
+        let deposit = Number(prompt("enter amount to deposit"));
+        if(deposit < 0 || deposit == "" || deposit == null || isNaN(deposit)){
+            alert("invalid amount");
+            window.location.href = "account.html";  
+        }else{
+            userDetails["balance"] += deposit;
+            localStorage.setItem(accountnumber, JSON.stringify(userDetails));
+            alert(`Deposit Successfull, your balance is ${JSON.parse(localStorage.getItem(accountnumber)).balance}`);
+            window.location.href = "account.html";  
+        }
+
+    
+    //withdraw block
+    }else if(input == 2){
+        let withdraw = Number(prompt("enter amount to withdraw"));
+
+        if(withdraw > 0 && withdraw != "" && withdraw != null && !isNaN(withdraw) && withdraw < JSON.parse(localStorage.getItem(accountnumber)).balance){
+            userDetails["balance"] -= Number(withdraw);
+            localStorage.setItem(accountnumber, JSON.stringify(userDetails));
+            alert(`Withdrawal Successfull, your balance is ${userDetails["balance"]}`);
+        }else if(withdraw > JSON.parse(localStorage.getItem(accountnumber)).balance){
+            alert("insufficient funds");
+            window.location.href = "account.html";  
+        } else{
+            alert("invalid amount");
+            window.location.href = "account.html";  
+        }
+
+    //balance block
+    }else if(input == 3){
+        alert(`your balance is ${userDetails["balance"]}`);
+
+         //transfer block
+    }else if(input == 4){
+
+        let transfer = Number(prompt("enter amount to transfer"));
+        let transferAccount = prompt("enter account number to transfer to");
+
+        if(transfer > 0 && transfer != "" && transfer != null && !isNaN(transfer) && transfer < JSON.parse(localStorage.getItem(accountnumber)).balance && transferAccount != accountnumber && transferAccount != "" && transferAccount.length == 12 && !isNaN(transferAccount)){
+                userDetails["balance"] -= Number(transfer);
+                localStorage.setItem(accountnumber, JSON.stringify(userDetails));
+                customerData[transferAccount] += Number(transfer);
+
+                alert(`Transfer Successfull, your balance is ${userDetails["balance"]}`);
+        }else if(transferAccount == accountnumber || transferAccount == "" || transferAccount.length != 12){
+            alert("invalid account number");
+            window.location.href = "account.html";  
+        }else if(transfer > JSON.parse(localStorage.getItem(accountnumber)).balance){
+            alert("insufficient funds");
+            window.location.href = "account.html";  
+        } else{
+            alert("invalid amount");
+            window.location.href = "account.html";  
+        }
+
+
+    //exit block
+    }else if(input == 5){
+        alert("Thank you for banking with us");
+        window.location.href = "index.html";
+
+        //invalid input block
+    }else{
+        alert("invalid input. please try again");
+        window.location.href = "account.html";
+    }
+
+
+</script>

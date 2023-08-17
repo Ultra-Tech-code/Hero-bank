@@ -1,0 +1,102 @@
+<script>
+   alert("Hello! Welcome to Hero's Bank!");
+   let input = prompt("press 1 to login \npress 2 to register \npress 3 to recover PIN \npress 4 to exit");
+
+   const customerData = {};
+   let accountNumber;
+
+   //login block
+   if(input == 1){
+       let accountnumber =  prompt("Enter your Acccount Number to login \n Acccount Number:");
+       let password = prompt("Enter your pin to login \n PIN:");
+
+        //fetch userDetails from local storage
+        let userDetails = JSON.parse(localStorage.getItem(accountnumber));
+
+         if(accountnumber == userDetails["accountNumber"] && password == userDetails["password"]){
+              alert("login successful");
+              localStorage.setItem("accountNumber", accountnumber);
+              window.location.href = "account.html";
+            }else{
+                alert("invalid Acccount Number or PIN. \nplease try again");
+            }
+
+    //register block
+    }else if(input == 2){
+        let name =  prompt("Enter your Name \n Name:").toLowerCase();
+        let password = prompt("Enter your PIN \n PIN:");
+        let confirmPassword = prompt("Confirm your PIN \n PIN:");
+        let accountType = prompt("Select Account Type \npress 1 for Savings \npress 2 for Current \npress 3 to Exit");
+        let balance = 0;
+        let savingsCode = 101;
+        let currentCode = 201;
+
+         //A random integer between 100 and 999
+         let rand = Math.floor(100 + Math.random() * 900);
+
+        
+        //check for account type
+        if(accountType == 1){
+            accountNumber = savingsCode + stringToNumberAlphabet(name) + rand;
+        }else if(accountType == 2){
+            accountNumber = currentCode + stringToNumberAlphabet(name) + rand;
+        }
+
+        //check for password match and account type
+        if(password == confirmPassword && accountType == 1 || accountType == 2 ){
+            alert("registration successful \n your Account Number is " + accountNumber + "\n please keep it safe");  
+            alert("please login to continue");
+
+            customerData[accountNumber] = {
+                name: name,
+                password: password,
+                balance: balance,
+                accountNumber: accountNumber,
+                accountType: accountType
+            }
+
+            localStorage.setItem(accountNumber,  JSON.stringify(customerData[accountNumber]));
+
+        }else if(accountType == 3){
+            alert("Thank you for banking with us");
+            window.location.href = "index.html";
+        }else{  
+            alert("password does not match or Invalid account type. \nplease try again");
+        }
+        window.location.href = "index.html";
+    
+        //recover pin block
+    }else if(input == 3){
+        let name =  prompt("Enter your Name \n Name:").toLowerCase();
+        let accountNumber =  prompt("Enter your Acccount Number to login \n Acccount Number:");
+
+        //fetch userDetails from local storage
+        let userDetails = JSON.parse(localStorage.getItem(accountNumber));
+
+        if(name == userDetails["name"] && accountNumber == userDetails["accountNumber"]){
+            alert("your PIN is " + userDetails["password"]); 
+            window.location.href = "index.html"; 
+        }else{
+            alert("invalid Acccount Number or Name. \nplease try again");
+            window.location.href = "index.html";
+        }
+    
+    //exit block
+    }else if(input == 4){
+        alert("Thank you for banking with us");
+
+    //invalid input block
+    }else{
+        alert("invalid input. please try again");
+    }
+
+
+//function to convert string to number
+function stringToNumberAlphabet(str) {
+  const baseCharCode = 'a'.charCodeAt(0) - 1; // 'a' has char code 97
+  const numericValues = Array.from(str).map(char => char.toLowerCase().charCodeAt(0) - baseCharCode);
+  return numericValues.join('');
+}
+
+
+</script>
