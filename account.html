@@ -60,6 +60,7 @@ let acccountNumber = userDetails["accountNumber"];
         alert(`You are about to transfer ${transfer}.00 to ${transferAccount}, \npress OK to continue`);
 
         if(transfer > 0 && transfer != "" && transfer != null && !isNaN(transfer) && transfer < JSON.parse(localStorage.getItem(accountnumber)).balance && transferAccount != accountnumber && transferAccount != "" && transferAccount.length == 12 && !isNaN(transferAccount)){
+            
                 userDetails["balance"] -= Number(transfer);
                 localStorage.setItem(accountnumber, JSON.stringify(userDetails));
                 customerData[transferAccount] += Number(transfer);

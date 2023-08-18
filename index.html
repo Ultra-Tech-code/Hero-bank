@@ -11,16 +11,18 @@
        let password = prompt("Enter your pin to login \n PIN:");
 
         //fetch userDetails from local storage
-        let userDetails = JSON.parse(localStorage.getItem(accountnumber));
-        console.log(userDetails, userDetails);
+        let userDetails = JSON.parse(localStorage.getItem("customerData"));
+  
 
-         if(userDetails !== null && accountnumber == userDetails["accountNumber"] && password == userDetails["password"]){
+         if(userDetails[accountnumber] !== null && accountnumber == customerData[accountnumber]["accountNumber"] && password == userDetails[accountnumber]["password"]){
               alert("Login successful");
               localStorage.setItem("accountNumber", accountnumber);
               window.location.href = "account.html";
+
             }else if(userDetails == null){
                 alert("Invalid Login Details. please register");
                 window.location.href = "index.html";
+
             }else{
                 alert("Invalid Acccount Number or PIN. \nplease try again");
                 window.location.href = "index.html";
@@ -28,9 +30,11 @@
 
     //register block
     }else if(input == 2){
+
         let name =  prompt("Enter your Name \n Name:").toLowerCase();
         let password = prompt("Enter your PIN \n PIN:");
         let confirmPassword = prompt("Confirm your PIN \n PIN:");
+        let phoneNumber = prompt("Enter your Phone Number \n Phone Number:");
         let accountType = prompt("Select Account Type \npress 1 for Savings \npress 2 for Current \npress 3 to Exit");
         let balance = 0;
         let savingsCode = 101;
@@ -40,7 +44,7 @@
          let rand = Math.floor(100 + Math.random() * 900);
 
         
-        //check for account type
+        //check for account type and generate account number
         if(accountType == 1){
             accountNumber = savingsCode + stringToNumberAlphabet(name) + rand;
         }else if(accountType == 2){
@@ -48,22 +52,46 @@
         }
 
         //check for password match and account type
-        if(password == confirmPassword && (accountType == 1 || accountType == 2)){
+        if(name.length > 2 && password == confirmPassword && (accountType == 1 || accountType == 2) && phoneNumber.length == 11){
             alert("Registration successful \n your Account Number is " + accountNumber + "\n please keep it safe");  
             alert("Please login to continue");
 
-            customerData[accountNumber] = {
+            let userData = {
                 name: name,
                 password: password,
                 balance: balance,
                 accountNumber: accountNumber,
-                accountType: accountType
+                accountType: accountType,
+                phoneNumber: phoneNumber
             }
-              localStorage.setItem(accountNumber,  JSON.stringify(customerData[accountNumber]));
 
+        // Store the user data in the ussdData object using accountNumber as the key
+        customerData[accountNumber] = userData;
+        
+        //stored in local storage
+        localStorage.setItem("customerData",  JSON.stringify(customerData));
+        
+        //check for phone number
+        }else if(phoneNumber.length < 11 || phoneNumber.length > 11){
+            alert("Invalid Phone Number");
+            window.location.href = "index.html";
+        
+            //check for name length
+        }else if(name.length < 2){
+            alert("Invalid Name. name must be more than two alphabet \nplease try again");
+            window.location.href = "index.html";
+        
+            //check for account type
+        }else if(accountType < 1 || accountType > 3){
+            alert("Invalid account type. \nplease try again");
+            window.location.href = "index.html";
+        
+            //check for exit
         }else if(accountType == 3){
             alert("Thank you for banking with us");
             window.location.href = "index.html";
+        
+        //check for invalid input
         }else{  
             alert("Password does not match or Invalid account type. \nplease try again");
         }
@@ -73,18 +101,23 @@
     }else if(input == 3){
         let name =  prompt("Enter your Name \n Name:").toLowerCase();
         let accountNumber =  prompt("Enter your Acccount Number to login \n Acccount Number:");
+        let phoneNumber = prompt("Enter your Phone Number \n Phone Number:");
 
         //fetch userDetails from local storage
-        let userDetails = JSON.parse(localStorage.getItem(accountNumber));
+        let userDetails = JSON.parse(localStorage.getItem("customerData"));
 
-        if(userDetails !== null && name == userDetails["name"] && accountNumber == userDetails["accountNumber"]){
-            alert("your PIN is " + userDetails["password"]); 
+        //check that input params are right
+        if(userDetails[accountNumber] !== null && name == userDetails[accountNumber]["name"] && accountNumber == userDetails[accountNumber]["accountNumber"] && phoneNumber == userDetails[accountNumber]["phoneNumber"]){
+            alert("your PIN is " + userDetails[accountNumber]["password"]); 
             window.location.href = "index.html"; 
+        
+        //check for null account
         }else if(userDetails == null){
                 alert("Invalid Login Details. please register");
                 window.location.href = "index.html";
+        
         }else{
-        alert("invalid Acccount Number or Name. \nplease try again");
+        alert("Invalid Acccount Number, Name or phoneNumber. \nplease try again");
         window.location.href = "index.html";
         }
     
@@ -96,28 +129,34 @@
        let password = prompt("Enter your pin \n PIN:");
 
         //fetch userDetails from local storage
-        let userDetails = JSON.parse(localStorage.getItem(accountnumber));
-        console.log(userDetails, userDetails);
+        let userDetails = JSON.parse(localStorage.getItem("customerData"));
 
-         if(userDetails !== null && accountnumber == userDetails["accountNumber"] && password == userDetails["password"]){
+        //check that input params are right
+         if(userDetails[accountnumber] !== null && accountnumber == userDetails[accountnumber]["accountNumber"] && password == userDetails[accountnumber]["password"]){
               localStorage.removeItem(accountnumber);
+              delete userDetails[accountnumber];
               alert("Account deleted succeffully");
               window.location.href = "index.html";
+
+            // check for null account
             }else if(userDetails == null){
                 alert("Account does not exist. please register");
                 window.location.href = "index.html";
+            
+            //check for invalid input
             }else{
                 alert("Invalid Acccount Number or PIN. \nplease try again");
                 window.location.href = "index.html";
             }    
 
      //exit block
-    } else if(input == 5){
+    }else if(input == 5){
         alert("Thank you for banking with us");
 
     //invalid input block
     }else{
         alert("invalid input. please try again");
+        window.location.href = "index.html";
     }
 
 
