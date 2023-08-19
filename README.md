@@ -1,8 +1,7 @@
-# Simple UUSD Code mock
-This repository contains Simple UUSD Code mock. Just playing around
+# Simple ATM
+This repository contains Simple ATM Code. Just playing around
 
 ## Requirement
-UUSD Banking Code - *384#
 Account Number must be 12 digits example (201919113181)
 Phone number must be 11 digits  exmaple (08012345678)
 

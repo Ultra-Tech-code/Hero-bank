@@ -1,12 +1,17 @@
 <script>
 
-//fetch userDetails from local storage
+//fetch  from local storage
 let accountnumber = localStorage.getItem("accountNumber");
-let users = JSON.parse(localStorage.getItem("customerData"));
-let userDetails = users[accountnumber];
+let userDetails = JSON.parse(localStorage.getItem("customerData"));
+console.log(userDetails, "usser")
+console.log("gvh", userDetails["accountNumber"])
+console.log("userDetails[accountnumber]", userDetails[accountnumber])
+console.log("accountnumber", accountnumber)
 
-let username = userDetails["name"];
-let acccountNumber = userDetails["accountNumber"];
+let username = userDetails[accountnumber]["name"];
+console.log("username", username)
+
+let acccountNumber = userDetails[accountnumber]["accountNumber"];
 
 
 
@@ -20,9 +25,10 @@ let acccountNumber = userDetails["accountNumber"];
         alert(`You are about to deposit ${amount}.00, \npress OK to continue`);
 
         if(amount > 0 && !isNaN(amount)){
-            userDetails["balance"] += amount;
-            localStorage.setItem(accountnumber, JSON.stringify(userDetails));
-            alert(`Deposit Successfull, your balance is ${JSON.parse(localStorage.getItem(accountnumber)).balance}`);
+            userDetails[accountnumber]["balance"] += amount;
+            localStorage.setItem("customerData",  JSON.stringify(userDetails));
+
+            alert(`Deposit Successfull, your balance is ${userDetails[accountnumber]["balance"]}`);
             window.location.href = "account.html";  
  
         }else{
@@ -35,18 +41,14 @@ let acccountNumber = userDetails["accountNumber"];
         let withdraw = Number(prompt("enter amount to withdraw"));
         alert(`you are about to withdraw ${withdraw}.00, \npress OK to continue`);
 
-        //fetch userDetails from local storage
-        let users = JSON.parse(localStorage.getItem("customerData"));
-        let userDetails = users[accountnumber]; 
-
-        if(withdraw > 0 && !isNaN(withdraw) && withdraw < userDetails["balance"]){
-            userDetails["balance"] -= Number(withdraw);
+        if(withdraw > 0 && !isNaN(withdraw) && withdraw < userDetails[accountnumber]["balance"]){
+            userDetails[accountnumber]["balance"] -= Number(withdraw);
             localStorage.setItem("customerData", JSON.stringify(userDetails));
-            alert(`Withdrawal Successfull, your balance is ${userDetails["balance"]}.00`);
+            alert(`Withdrawal Successfull, your balance is ${userDetails[accountnumber]["balance"]}.00`);
             window.location.href = "account.html";
 
             //check for insufficient funds
-        }else if(withdraw > userDetails["balance"]){
+        }else if(withdraw > userDetails[accountnumber]["balance"]){
             alert("Insufficient funds");
             window.location.href = "account.html";  
         
@@ -58,7 +60,8 @@ let acccountNumber = userDetails["accountNumber"];
 
     //balance block
     }else if(input == 3){
-        alert(`Your balance is ${userDetails["balance"]}`);
+        alert(`Your balance is ${userDetails[accountnumber]["balance"]}`);
+        window.location.href = "account.html";
 
          //transfer block
     }else if(input == 4){
@@ -70,12 +73,13 @@ let acccountNumber = userDetails["accountNumber"];
 
         alert(`You are about to transfer ${transfer}.00 to ${transferAccount}, \npress OK to continue`);
 
-        if(transfer > 0 && transfer < userDetails["balance"] && transferAccount != accountnumber && transferAccount.length == 12 && !isNaN(transferAccount)){
+        if(transfer > 0 && transfer < userDetails[accountnumber]["balance"] && transferAccount != accountnumber && transferAccount.length == 12 && !isNaN(transferAccount)){
 
-                userDetails["balance"] -= Number(transfer);
-                localStorage.setItem(accountnumber, JSON.stringify(userDetails));
-                customerData[transferAccount] += Number(transfer);
-                alert(`Transfer Successfull, your balance is ${userDetails["balance"]}.00`);
+                userDetails[accountnumber]["balance"] -= Number(transfer);
+                localStorage.setItem("customerData", JSON.stringify(userDetails));
+                
+                //customerData[transferAccount] += Number(transfer);
+                alert(`Transfer Successfull, your balance is ${userDetails[accountnumber]["balance"]}.00`);
             
         //check for invalid bank
         }else if(bankName > 7 || bankName < 1){
@@ -88,7 +92,7 @@ let acccountNumber = userDetails["accountNumber"];
             window.location.href = "account.html";  
         
             //check for insufficient funds
-        }else if(transfer > userDetails.balance){
+        }else if(transfer > userDetails[accountnumber].balance){
             alert("insufficient funds");
             window.location.href = "account.html";  
 

@@ -8,19 +8,22 @@
    //login block
    if(input == 1){
        let accountnumber =  prompt("Enter your Acccount Number to login \n Acccount Number:");
-       let password = prompt("Enter your pin to login \n PIN:");
+       let pin = prompt("Enter your pin to login \n PIN:");
 
         //fetch userDetails from local storage
         let userDetails = JSON.parse(localStorage.getItem("customerData"));
-  
 
-         if(userDetails[accountnumber] !== null && accountnumber == customerData[accountnumber]["accountNumber"] && password == userDetails[accountnumber]["password"]){
+         if(userDetails !== null && userDetails[accountnumber]["accountNumber"] !== undefined && accountnumber == userDetails[accountnumber]["accountNumber"] && pin == userDetails[accountnumber]["pin"]){
               alert("Login successful");
               localStorage.setItem("accountNumber", accountnumber);
               window.location.href = "account.html";
 
-            }else if(userDetails[accountnumber] == null){
+            }else if(userDetails == null){
                 alert("Invalid Login Details. please register");
+                window.location.href = "index.html";
+
+            }else if(userDetails[accountnumber]["accountNumber"] == undefined){
+                alert("Invalid Login Details. please try again");
                 window.location.href = "index.html";
 
             }else{
@@ -32,10 +35,10 @@
     }else if(input == 2){
 
         let name =  prompt("Enter your Name \n Name:").toLowerCase();
-        let password = prompt("Enter your PIN \n PIN:");
-        let confirmPassword = prompt("Confirm your PIN \n PIN:");
         let phoneNumber = prompt("Enter your Phone Number \n Phone Number:");
         let accountType = prompt("Select Account Type \npress 1 for Savings \npress 2 for Current \npress 3 to Exit");
+        let pin = prompt("Enter your PIN \n PIN:");
+        let confirmPin = prompt("Confirm your PIN \n PIN:");
         let balance = 0;
         let savingsCode = 101;
         let currentCode = 201;
@@ -51,14 +54,14 @@
             accountNumber = currentCode + stringToNumberAlphabet(name) + rand;
         }
 
-        //check for password match and account type
-        if(name.length > 2 && password == confirmPassword && (accountType == 1 || accountType == 2) && phoneNumber.length == 11){
+        //check for pin match and account type
+        if(name.length > 2 && pin == confirmPin && (accountType == 1 || accountType == 2) && phoneNumber.length == 11){
             alert("Registration successful \n your Account Number is " + accountNumber + "\n please keep it safe");  
             alert("Please login to continue");
 
             let userData = {
                 name: name,
-                password: password,
+                pin: pin,
                 balance: balance,
                 accountNumber: accountNumber,
                 accountType: accountType,
@@ -73,7 +76,7 @@
         
         //check for phone number
         }else if(phoneNumber.length < 11 || phoneNumber.length > 11){
-            alert("Invalid Phone Number");
+            alert("Invalid Phone Number. phone number must be 11 digits \nplease try again");
             window.location.href = "index.html";
         
             //check for name length
@@ -93,7 +96,7 @@
         
         //check for invalid input
         }else{  
-            alert("Password does not match or Invalid account type. \nplease try again");
+            alert("pin does not match. \nplease try again");
         }
         window.location.href = "index.html";
     
@@ -108,7 +111,7 @@
 
         //check that input params are right
         if(userDetails[accountNumber] !== null && name == userDetails[accountNumber]["name"] && accountNumber == userDetails[accountNumber]["accountNumber"] && phoneNumber == userDetails[accountNumber]["phoneNumber"]){
-            alert("your PIN is " + userDetails[accountNumber]["password"]); 
+            alert("your PIN is " + userDetails[accountNumber]["pin"]); 
             window.location.href = "index.html"; 
         
         //check for null account
@@ -126,13 +129,13 @@
         alert("You are about to delete your account. press Ok to proceed");
 
        let accountnumber =  prompt("Enter your Acccount Number \n Acccount Number:");
-       let password = prompt("Enter your pin \n PIN:");
+       let pin = prompt("Enter your pin \n PIN:");
 
         //fetch userDetails from local storage
         let userDetails = JSON.parse(localStorage.getItem("customerData"));
 
         //check that input params are right
-         if(userDetails[accountnumber] !== null && accountnumber == userDetails[accountnumber]["accountNumber"] && password == userDetails[accountnumber]["password"]){
+         if(userDetails[accountnumber] !== null && accountnumber == userDetails[accountnumber]["accountNumber"] && pin == userDetails[accountnumber]["pin"]){
               localStorage.removeItem(accountnumber);
               delete userDetails[accountnumber];
               alert("Account deleted succeffully");
