@@ -7,29 +7,29 @@
 
    //login block
    if(input == 1){
-       let accountnumber =  prompt("Enter your Acccount Number to login \n Acccount Number:");
-       let pin = prompt("Enter your pin to login \n PIN:");
+        let accountnumber = prompt("Enter your Account Number to login:\nAccount Number:");
+        let pin = prompt("Enter your PIN to login:\nPIN:");
 
-        //fetch userDetails from local storage
+        // Fetch userDetails from local storage
         let userDetails = JSON.parse(localStorage.getItem("customerData"));
 
-         if(userDetails !== null && userDetails[accountnumber]["accountNumber"] !== undefined && accountnumber == userDetails[accountnumber]["accountNumber"] && pin == userDetails[accountnumber]["pin"]){
-              alert("Login successful");
-              localStorage.setItem("accountNumber", accountnumber);
-              window.location.href = "account.html";
-
-            }else if(userDetails == null){
-                alert("Invalid Login Details. please register");
-                window.location.href = "index.html";
-
-            }else if(userDetails[accountnumber]["accountNumber"] == undefined){
-                alert("Invalid Login Details. please try again");
-                window.location.href = "index.html";
-
-            }else{
-                alert("Invalid Acccount Number or PIN. \nplease try again");
-                window.location.href = "index.html";
-            }
+        if (userDetails !== null) {
+                if (
+                    userDetails.hasOwnProperty(accountnumber) &&
+                    userDetails[accountnumber]["accountNumber"] === accountnumber &&
+                    userDetails[accountnumber]["pin"] === pin
+                ) {
+                    alert("Login successful");
+                    localStorage.setItem("accountNumber", accountnumber);
+                    window.location.href = "account.html";
+                } else {
+                    alert("Invalid Account Number or PIN. Please try again.");
+                    window.location.href = "index.html";
+                }
+        } else {
+        alert("Invalid Login Details. Please register.");
+        window.location.href = "index.html";
+        }
 
     //register block
     }else if(input == 2){

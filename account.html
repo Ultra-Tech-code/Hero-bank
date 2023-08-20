@@ -3,14 +3,8 @@
 //fetch  from local storage
 let accountnumber = localStorage.getItem("accountNumber");
 let userDetails = JSON.parse(localStorage.getItem("customerData"));
-console.log(userDetails, "usser")
-console.log("gvh", userDetails["accountNumber"])
-console.log("userDetails[accountnumber]", userDetails[accountnumber])
-console.log("accountnumber", accountnumber)
 
 let username = userDetails[accountnumber]["name"];
-console.log("username", username)
-
 let acccountNumber = userDetails[accountnumber]["accountNumber"];
 
 
@@ -77,9 +71,10 @@ let acccountNumber = userDetails[accountnumber]["accountNumber"];
 
                 userDetails[accountnumber]["balance"] -= Number(transfer);
                 localStorage.setItem("customerData", JSON.stringify(userDetails));
-                
+
                 //customerData[transferAccount] += Number(transfer);
                 alert(`Transfer Successfull, your balance is ${userDetails[accountnumber]["balance"]}.00`);
+                window.location.href = "account.html";
             
         //check for invalid bank
         }else if(bankName > 7 || bankName < 1){
@@ -103,9 +98,118 @@ let acccountNumber = userDetails[accountnumber]["accountNumber"];
 
     //airtime block
     }else if(input == 5){
-        alert("Are you sure you want to exit? \npress Ok to continue");
-        alert("Thank you for banking with us");
-        window.location.href = "index.html";
+
+        let airtimeUser = prompt("press 1 for Others \npress 2 for Self \npress 3 to Exit");
+
+        //other Block
+        if(airtimeUser == 1){
+            let network = prompt("Select Network, press \n1. Glo \n2. Airtel \n3. Mtn \n4. Etisalat \n5. to exit")
+            let phoneNumber = prompt("Enter phone number: ")
+            let amount = Number(prompt("Enter the amount you will like to recharge"))
+            let networkName;
+                if (network == 1) { networkName = "Glo"};
+                if (network == 2) { networkName = "Airtel"};
+                if (network == 3) { networkName = "Mtn"};
+                if (network == 4) { networkName = "Etisalat"};
+
+
+                if(network == 1 || network == 2 || network == 3 || network == 4){
+                            
+                    //check if user has enough balance and phone number is valid
+                    console.log(phoneNumber.length)
+                    if(phoneNumber.length == 11 && amount > 0 && amount <= userDetails[accountnumber]["balance"]){
+                        
+                    alert(`You are about to buy a ${networkName} airtime of ${amount} on ${phoneNumber}`)
+
+                    //update balance
+                    userDetails[accountnumber]["balance"] -= Number(amount);
+                    localStorage.setItem("customerData", JSON.stringify(userDetails));
+
+                    alert(`You have successfully bought a ${networkName} airtime of ${amount} \n your new balance is ${userDetails[accountnumber]["balance"]}`)
+                    window.location.href = "account.html";
+
+
+                    }else if(phoneNumber.length != 11){
+                        alert("Invalid Number, Verify and try again")
+                        window.location.href = "account.html";
+
+
+                    }else if(amount > userDetails[accountnumber]["balance"]){
+                        alert("Insufficient Balance, try again")
+                        window.location.href = "account.html";
+
+
+                    }else{
+                        alert("Invalid Input, try again")
+                        window.location.href = "account.html";
+                    }
+
+                }else if(network == 5){
+                    alert("Thank you!!")
+                    window.location.href = "index.html";
+
+                }else{
+                alert("Invalid Input, please try again")
+                window.location.href = "index.html";
+            }
+
+        //self Block
+        }else if(airtimeUser == 2){
+            let network = prompt("Select Network, press \n1. Glo \n2. Airtel \n3. Mtn \n4. Etisalat \n5. to exit")
+            let amount = Number(prompt("Enter the amount you will like to recharge"))
+            let networkName;
+            if (network == 1) { networkName = "Glo"};
+            if (network == 2) { networkName = "Airtel"};
+            if (network == 3) { networkName = "Mtn"};
+            if (network == 4) { networkName = "Etisalat"};
+
+
+            if(network == 1 || network == 2 || network == 3 || network == 4){
+                        
+                //check if user has enough balance and phone number is valid
+                if(amount > 0 && amount <= userDetails[accountnumber]["balance"]){
+                    
+                alert(`You are about to buy a ${networkName} airtime of ${amount}`)
+
+
+                //update balance
+                userDetails[accountnumber]["balance"] -= Number(amount);
+                userDetails[accountnumber]["phoneNumberBalance"] += Number(amount);
+
+                localStorage.setItem("customerData", JSON.stringify(userDetails));
+
+                alert(`You have successfully bought a ${networkName} airtime of ${amount} \n your new balance is ${userDetails[accountnumber]["balance"]}`)
+                window.location.href = "account.html";
+
+                }else if(amount > userDetails[accountnumber]["balance"]){
+                    alert("Insufficient Balance, try again")
+                    window.location.href = "account.html";
+
+                // invalid block
+                }else{
+                    alert("Invalid Input, try again")
+                    window.location.href = "account.html";
+                }
+
+            //exit block
+            }else if(network == 5){
+                alert("Thank you!!")
+                window.location.href = "index.html";
+
+            }else{
+                alert("Invalid Input, please try again")
+                window.location.href = "index.html";
+            }
+
+            //Exit Block
+            }else if (airtimeUser == 3){
+                alert("Thank you!!")
+            //invalid block
+            }else{
+                alert("Invalid Input, please try again")
+                window.location.href = "account.html";
+            }
+
 
 
      //exit block
