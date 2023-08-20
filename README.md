@@ -2,11 +2,13 @@
 This repository contains Simple ATM Code. Just playing around
 
 ## Requirement
-Account Number must be 12 digits example (201919113181)
-Phone number must be 11 digits  exmaple (08012345678)
+You need to register.
+
+Account Number must be 12 digits for transfer to be succesfull example (201919113181)
+Phone number must be 11 digits for registration and airtime recharge to be sucessfull  exmaple (08012345678)
 
 
-- [Live Link](https://ultra-tech-code.github.io/ussd-code-project/index.html)
+- [Live Link](https://ultra-tech-code.github.io/Hero-bank/)
 
 ## 1. Tech Stack
 This boilerplate uses the following tech stack:
@@ -21,13 +23,13 @@ To get this project up running locally, follow these simple steps:
 ### 2.1 Clone the repository:
 
 ```bash
-git clone https://github.com/Ultra-Tech-code/ussd-code-project
+git clone https://github.com/Ultra-Tech-code/Hero-bank
 ```
 
 ### 2.2 Navigate to the directory:
 
 ```bash
-cd ussd-code-project
+cd Hero-bank
 ```
 
 ### Start your live server
