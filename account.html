@@ -158,10 +158,14 @@ let acccountNumber = userDetails[accountnumber]["accountNumber"];
             let network = prompt("Select Network, press \n1. Glo \n2. Airtel \n3. Mtn \n4. Etisalat \n5. to exit")
             let amount = Number(prompt("Enter the amount you will like to recharge"))
             let networkName;
-            if (network == 1) { networkName = "Glo"};
-            if (network == 2) { networkName = "Airtel"};
-            if (network == 3) { networkName = "Mtn"};
-            if (network == 4) { networkName = "Etisalat"};
+            
+            while(network != 0){
+                if (network == 1) { networkName = "Glo"};
+                if (network == 2) { networkName = "Airtel"};
+                if (network == 3) { networkName = "Mtn"};
+                if (network == 4) { networkName = "Etisalat"};
+            }
+
 
 
             if(network == 1 || network == 2 || network == 3 || network == 4){
